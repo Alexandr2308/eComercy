@@ -2,17 +2,24 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.urls import reverse
+
 
 User = get_user_model()
+
+
+def get_product_url(obj, viewname):
+    ct_model = obj.__class__.meta.model_name
+    return reverse(viewname, kwargs={'ct_model': ct_model, 'slug': obj.slug})
 
 
 class LatestProductsManager:
 
     @staticmethod
-    def get_products_for_main_page(self, *args, **kwargs):
+    def get_products_for_main_page(*args, **kwargs):
         with_respect_to = kwargs.get('with_respect_to')
         products = []
-        ct_models =ContentType.objects.filter(model__in=args)
+        ct_models = ContentType.objects.filter(model__in=args)
         for ct_model in ct_models:
             model_products = ct_model.model_class()._base_manager.all().order_by('-id')[:5]
             products.extend(model_products)
@@ -36,6 +43,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'slug': self.slug})
 
 
 class Product(models.Model):
@@ -62,6 +72,9 @@ class Shorts(Product):
     def __str__(self):
         return '{} : {}'.format(self.category.name, self.title)
 
+    def get_absolut_url(self):
+        return get_product_url(self, 'product_detail')
+
 
 class Jacket(Product):
     size = models.CharField(max_length=255, verbose_name='Размер')
@@ -71,6 +84,9 @@ class Jacket(Product):
 
     def __str__(self):
         return '{} : {}'.format(self.category.name, self.title)
+
+    def get_absolut_url(self):
+        return get_product_url(self, 'product_detail')
 
 
 class CartProduct(models.Model):
@@ -99,7 +115,7 @@ class Cart(models.Model):
 class Customer(models.Model):
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, verbose_name='Номер телефона')
-    address = models.CharField(max_length=255, verbose_name='Адпес')
+    address = models.CharField(max_length=255, verbose_name='Адрес')
 
     def __str__(self):
         return 'Покупатель: {} {}'.format(self.user.first_name, self.user.last_name)

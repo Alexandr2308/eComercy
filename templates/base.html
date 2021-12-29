@@ -58,18 +58,9 @@
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Одежда для женщин</li>
                                         {% for category in category %}
-                                            <li><a href="{% url 'shop' %}">{{ category }}</a></li>
+                                            <li><a href="{{ category.get_absolut_url }}">{{ category.name }}</a></li>
                                         {% endfor %}
-{#                                        <li><a href="{% url 'shop' %}">Куртки/жилеты</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Пиджаки</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Платья/комбинзоны</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Рубашки</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Футболки</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Свитера/толстовки</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Брюки/джинсы</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Юбки/шорты</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Костюмы</a></li>#}
-{#                                        <li><a href="{% url 'shop' %}">Аксесуары</a></li>#}
+
                                     </ul>
                                     <div class="single-mega cn-col-4">
                                         <img src="{% static 'img/bg-img/bg-6.jpg' %}" alt="">
