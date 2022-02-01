@@ -45,20 +45,20 @@
                         <ul>
                             <li><a href="#">МЕНЮ</a>
                                 <ul class="dropdown">
-                                    <li><a href="{% url 'home' %}">ГЛАВНАЯ</a></li>
+                                    <li><a href="{#% url 'home' %#}">ГЛАВНАЯ</a></li>
                                     <li><a href="{% url 'shop' %}">МАГАЗИН</a></li>
 {#                                    <li><a href="single-product-details.html">Product Details</a></li>#}
 {#                                    <li><a href="checkout.html">Checkout</a></li>#}
-                                    <li><a href="{% url 'about-us' %}">О НАС</a></li>
-                                    <li><a href="{% url 'contact' %}">КОНТАКТЫ</a></li>
+                                    <li><a href="{#% url 'about-us' %#}">О НАС</a></li>
+                                    <li><a href="{#% url 'contact' %#}">КОНТАКТЫ</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">КАТАЛОГ</a>
                                 <div class="megamenu">
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Одежда для женщин</li>
-                                        {% for category in category %}
-                                            <li><a href="{{ category.get_absolut_url }}">{{ category.name }}</a></li>
+                                        {% for category in object_list %}
+                                            <li><a href="{% url 'shop'  %}">{{category.name }}</a></li>
                                         {% endfor %}
 
                                     </ul>
@@ -67,18 +67,6 @@
                                     </div>
                                 </div>
                             </li>
-{#                            <li><a href="#">МЕНЮ</a>#}
-{#                                <ul class="dropdown">#}
-{#                                    <li><a href="index.html">ГЛАВНАЯ</a></li>#}
-{#                                    <li><a href="shop.html">МАГАЗИН</a></li>#}
-{#                                    <li><a href="single-product-details.html">Product Details</a></li>#}
-{#                                    <li><a href="checkout.html">Checkout</a></li>#}
-{#                                    <li><a href="regular-page.html">О НАС</a></li>#}
-{#                                    <li><a href="contact.html">КОНТАКТЫ</a></li>#}
-{#                                </ul>#}
-{#                            </li>#}
-{#                            <li><a href="blog.html">Blog</a></li>#}
-{#                            <li><a href="contact.html">Contact</a></li>#}
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -186,7 +174,7 @@
                     <li><span>total:</span> <span>$232.00</span></li>
                 </ul>
                 <div class="checkout-btn mt-100">
-                    <a href="{% url 'checkout' %}" class="btn essence-btn">check out</a>
+                    <a href="{#% url 'checkout' %#}" class="btn essence-btn">check out</a>
                 </div>
             </div>
         </div>
@@ -212,9 +200,9 @@
                         <!-- Footer Menu -->
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="{% url 'shop' %}">Магазин</a></li>
-                                <li><a href="{% url 'about-us' %}">О нас</a></li>
-                                <li><a href="{% url 'contact' %}">Контакты</a></li>
+                                <li><a href="{#% url 'shop' %#}">Магазин</a></li>
+                                <li><a href="{#% url 'about-us' %#}">О нас</a></li>
+                                <li><a href="{#% url 'contact' %#}">Контакты</a></li>
                             </ul>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block top_section %}
+{#    {% for object in objects %}#}
 
     <!-- ##### Single Product Details Area Start ##### -->
     <section class="single_product_details_area d-flex align-items-center">
@@ -9,20 +10,20 @@
         <!-- Single Product Thumb -->
         <div class="single_product_thumb clearfix">
             <div class="product_thumbnail_slides owl-carousel">
-                <img src="{% static 'img/product-img/IMG_6650_Small.png'%}" alt="">
-                <img src="{% static 'img/product-img/IMG_6651_Small.png' %}" alt="">
+                <img src="{{ object.image }}" alt="">
+                <img src="{{ object.image }}" alt="">
                 <img src="img/product-img/product-big-3.jpg" alt="">
             </div>
         </div>
 
         <!-- Single Product Description -->
         <div class="single_product_desc clearfix">
-            <span>mango</span>
+            <span>{{ object.brand }}</span>
             <a href="cart.html">
-                <h2>One Shoulder Glitter Midi Dress</h2>
+                <h2>{{ object.title }}</h2>
             </a>
-            <p class="product-price"><span class="old-price">$65.00</span> $49.00</p>
-            <p class="product-desc">{% lorem %}</p>
+            <p class="product-price">{{ object.price }}</p>
+            <p class="product-desc">{{ object.description }}</p>
 
             <!-- Form -->
             <form class="cart-form clearfix" method="post">
@@ -53,5 +54,6 @@
             </form>
         </div>
     </section>
+{#    {% endfor %}#}
     <!-- ##### Single Product Details Area End ##### -->
 {% endblock %}
