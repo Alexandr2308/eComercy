@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block top_section %}
-{#    {% for object in objects %}#}
+{#    {% for object in object_list %}#}
 
     <!-- ##### Single Product Details Area Start ##### -->
     <section class="single_product_details_area d-flex align-items-center">
@@ -10,15 +10,15 @@
         <!-- Single Product Thumb -->
         <div class="single_product_thumb clearfix">
             <div class="product_thumbnail_slides owl-carousel">
-                <img src="{{ object.image }}" alt="">
-                <img src="{{ object.image }}" alt="">
-                <img src="img/product-img/product-big-3.jpg" alt="">
+                <img src="{{ object.image.url }}" alt="">
+                <img src="{{ object.image.url }}" alt="">
+                <img src="{{ object.image.url }}" alt="">
             </div>
         </div>
 
         <!-- Single Product Description -->
         <div class="single_product_desc clearfix">
-            <span>{{ object.brand }}</span>
+            <span> {{ object.size }} </span>
             <a href="cart.html">
                 <h2>{{ object.title }}</h2>
             </a>
@@ -55,5 +55,4 @@
         </div>
     </section>
 {#    {% endfor %}#}
-    <!-- ##### Single Product Details Area End ##### -->
 {% endblock %}

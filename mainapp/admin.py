@@ -21,6 +21,7 @@ class JacketAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category)
+admin.site.register(Product)
 admin.site.register(Shorts, ShortsAdmin)
 admin.site.register(Jacket, JacketAdmin)
 # admin.site.register(Cart)

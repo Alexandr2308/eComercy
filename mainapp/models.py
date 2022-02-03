@@ -5,36 +5,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.urls import reverse
 
 
-# User = get_user_model()
-
-
-# def get_product_url(obj, viewname):
-#     ct_model = obj.__class__.meta.model_name
-#     return reverse(viewname, kwargs={'ct_model': ct_model, 'slug': obj.slug})
-
-#
-# class LatestProductsManager:
-#
-#     @staticmethod
-#     def get_products_for_main_page(*args, **kwargs):
-#         with_respect_to = kwargs.get('with_respect_to')
-#         products = []
-#         ct_models = ContentType.objects.filter(model__in=args)
-#         for ct_model in ct_models:
-#             model_products = ct_model.model_class()._base_manager.all().order_by('-id')[:5]
-#             products.extend(model_products)
-#         if with_respect_to:
-#             ct_model = ContentType.objects.filter(model=with_respect_to)
-#             if ct_model.exists():
-#                 if with_respect_to in args:
-#                     return sorted(
-#                         products, key=lambda x: x.__class__._meta.model_name.startwith
-#                         (with_respect_to), reverse=True)
-#         return products
-
-#
-# class LatestProducts:
-#     objects = LatestProductsManager
+User = get_user_model()
 
 
 class Category(models.Model):
@@ -44,13 +15,12 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('shop', kwargs={'slug': self.slug})
+    def get_absolut_url(self):
+        return reverse('shop')
 
 
 class Product(models.Model):
-    class Meta:
-        abstract = True
+
 
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, verbose_name='Наименование')
@@ -59,35 +29,22 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Описание', null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Цена')
     size = models.CharField(max_length=255, verbose_name='Размер')
-    made_in = models.CharField(max_length=255, verbose_name='Произведено в')
-    brand = models.CharField(max_length=255, verbose_name='Бренд')
-    composition = models.CharField(max_length=255, verbose_name='Состав')
 
     def __str__(self):
         return self.title
+
 
     def get_absolut_url(self):
         return reverse('single-product-details', kwargs={'slug': self.slug})
 
 
 class Shorts(Product):
-    # size = models.CharField(max_length=255, verbose_name='Размер')
-    # made_in = models.CharField(max_length=255, verbose_name='Произведено в')
-    # brand = models.CharField(max_length=255, verbose_name='Бренд')
-    # composition = models.CharField(max_length=255, verbose_name='Состав')
 
     def __str__(self):
         return '{} : {}'.format(self.category.name, self.title)
-    #
-    # def get_absolut_url(self):
-    #     return reverse('single-product-details', kwargs={'slug': self.slug})
 
 
 class Jacket(Product):
-    # size = models.CharField(max_length=255, verbose_name='Размер')
-    # made_in = models.CharField(max_length=255, verbose_name='Произведено в')
-    # brand = models.CharField(max_length=255, verbose_name='Бренд')
-    # composition = models.CharField(max_length=255, verbose_name='Состав')
 
     def __str__(self):
         return '{} : {}'.format(self.category.name, self.title)

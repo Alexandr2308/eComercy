@@ -45,11 +45,11 @@
                         <ul>
                             <li><a href="#">МЕНЮ</a>
                                 <ul class="dropdown">
-                                    <li><a href="{#% url 'home' %#}">ГЛАВНАЯ</a></li>
+                                    <li><a href="{% url 'home' %}">ГЛАВНАЯ</a></li>
                                     <li><a href="{% url 'shop' %}">МАГАЗИН</a></li>
 {#                                    <li><a href="single-product-details.html">Product Details</a></li>#}
 {#                                    <li><a href="checkout.html">Checkout</a></li>#}
-                                    <li><a href="{#% url 'about-us' %#}">О НАС</a></li>
+                                    <li><a href="{% url 'about-us' %}">О НАС</a></li>
                                     <li><a href="{#% url 'contact' %#}">КОНТАКТЫ</a></li>
                                 </ul>
                             </li>
@@ -57,9 +57,9 @@
                                 <div class="megamenu">
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Одежда для женщин</li>
-                                        {% for category in object_list %}
-                                            <li><a href="{% url 'shop'  %}">{{category.name }}</a></li>
-                                        {% endfor %}
+                                        {#% for category in object_list %#}
+                                            <li><a href="{#% url 'shop' %#}">{{category.name }}</a></li>
+                                        {#% endfor %#}
 
                                     </ul>
                                     <div class="single-mega cn-col-4">
