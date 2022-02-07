@@ -1,6 +1,32 @@
-from django.shortcuts import render, get_object_or_404
+import self
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from .models import *
+from .forms import UserAuthForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserCreationForm()
+    return render(request, 'register_user.html', {'form': form})
+
+
+def aut_user(request):
+    if request.method == 'POST':
+        form = UserAuthForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserAuthForm()
+    return render(request, 'aut-user.html', {'form': form})
 
 
 class IndexView(ListView):
@@ -10,6 +36,7 @@ class IndexView(ListView):
 
 class ShopView(ListView):
     model = Product
+    paginate_by = 1
     template_name = 'shop.html'
 
 
@@ -18,50 +45,29 @@ class ProductDetailView(DetailView):
     template_name = 'single-product-details.html'
 
 
+#
 # class CategoryListView(ListView):
-#     model = Shorts
-#     template_name = 'shop.html'
+#     model = Product
+#     template_name = 'category.html'
+
+class ShortViews(ListView):
+    model = Shorts
+    paginate_by = 1
+    template_name = 'shorts.html'
 
 
-
-# def show_category(request, cat_id):
-#     post = get_object_or_404(Category, pk=cat_id)
-#
-#     context = {
-#         'posts': post,
-#     }
-#     return render(request, 'shop.html', context=context)
-# category = Category.objects.all()
-# objects = Shorts.objects.all()
-# context = {
-#     'category': category,
-#     'objects': objects
-# }
+class JacketViews(ListView):
+    model = Jacket
+    paginate_by = 1
+    template_name = 'jackets.html'
 
 
-#
-#
-# def index_view(request):
-#     return render(request, 'index.html', context)
-# #
-#
-# def shop_view(request):
-#     return render(request, 'shop.html', {})
-#
-# #
-# def single_product_details_view(request):
-#     return render(request, 'single-product-details.html', {})
+def checkout_view(request):
+    return render(request, 'checkout.html', {})
 
 
-#
-#
-# def checkout_view(request):
-#     return render(request, 'checkout.html', context)
-#
-#
 def regular_page_view(request):
     return render(request, 'regular-page.html', {})
-#
-#
+
 # def contact_view(request):
 #     return render(request, 'contact.html', context)

@@ -4,7 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.urls import reverse
 
-
 User = get_user_model()
 
 
@@ -15,13 +14,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolut_url(self):
-        return reverse('shop')
+    # def get_absolut_url(self):
+    #     return reverse('category-view', kwargs={'slug': self.slug})
 
 
 class Product(models.Model):
-
-
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, verbose_name='Наименование')
     slug = models.SlugField(unique=True)
@@ -33,7 +30,6 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-
     def get_absolut_url(self):
         return reverse('single-product-details', kwargs={'slug': self.slug})
 
@@ -43,11 +39,17 @@ class Shorts(Product):
     def __str__(self):
         return '{} : {}'.format(self.category.name, self.title)
 
+    def get_absolut_url(self):
+        return reverse('single-product-details', kwargs={'slug': self.slug})
+
 
 class Jacket(Product):
 
     def __str__(self):
         return '{} : {}'.format(self.category.name, self.title)
+
+    def get_absolut_url(self):
+        return reverse('single-product-details', kwargs={'slug': self.slug})
     #
     # def get_absolut_url(self):
     #     return reverse('single-product-details', kwargs={'slug': self.slug})
