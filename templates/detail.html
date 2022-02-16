@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block top_section %}
+
+<form method="post">
+    {% csrf_token %}
+    {{cart.add}}
+    <button type="submit" class="btn btn-primary btn-block">Login</button>
+</form>
+
+{% endblock %}

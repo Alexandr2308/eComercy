@@ -13,5 +13,8 @@ urlpatterns = [
     path('accounts/', register, name='register'),
     path('auth-user/', aut_user, name='auth-user'),
     # path('contact/', contact_view, name='contact'),
+    path('cart/', cart_detail, name='cart_details'),
+    path('add/', cart_add, name='cart_add'),
+    path('cart_remove/', cart_remove, name='cart_remove'),
 
 ]

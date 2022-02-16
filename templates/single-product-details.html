@@ -10,42 +10,44 @@
         <!-- Single Product Thumb -->
         <div class="single_product_thumb clearfix">
             <div class="product_thumbnail_slides owl-carousel">
-                <img src="{{ object.image.url }}" alt="">
-                <img src="{{ object.image.url }}" alt="">
-                <img src="{{ object.image.url }}" alt="">
+                <img src="{{ product.image.url }}" alt="">
+                <img src="{{ product.image.url }}" alt="">
+                <img src="{{ product.image.url }}" alt="">
             </div>
         </div>
 
         <!-- Single Product Description -->
         <div class="single_product_desc clearfix">
-            <span> {{ object.size }} </span>
+            <span> {{ product.id}} </span>
             <a href="#">
-                <h2>{{ object.title }}</h2>
+                <h2>{{ product.title }}</h2>
             </a>
-            <p class="product-price">{{ object.price }}</p>
-            <p class="product-desc">{{ object.description }}</p>
+            <p class="product-price">{{ product.price }}</p>
+            <p class="product-desc">{{ product.description }}</p>
 
             <!-- Form -->
-            <form class="cart-form clearfix" method="post">
+            <form class="cart-form clearfix"  method="post">
+                {% csrf_token %}
+                {{ add_product_form.quantity }}
                 <!-- Select Box -->
-                <div class="select-box d-flex mt-50 mb-30">
-                    <select name="select" id="productSize" class="mr-5">
-                        <option value="value">Size: XL</option>
-                        <option value="value">Size: X</option>
-                        <option value="value">Size: M</option>
-                        <option value="value">Size: S</option>
-                    </select>
-                    <select name="select" id="productColor">
-                        <option value="value">Color: Black</option>
-                        <option value="value">Color: White</option>
-                        <option value="value">Color: Red</option>
-                        <option value="value">Color: Purple</option>
-                    </select>
-                </div>
+{#                <div class="select-box d-flex mt-50 mb-30">#}
+{#                    <select name="size" id="productSize" class="mr-5">#}
+{#                        <option value="{{ product.size }}">Size: {{ product.size }}</option>#}
+{#                        <option value="value">Size: X</option>#}
+{#                        <option value="value">Size: M</option>#}
+{#                        <option value="value">Size: S</option>#}
+{#                    </select>#}
+{#                    <select name="prise" id="productPrice">#}
+{#                        <option value="{{ product.price }}">Color: {{ product.price }}</option>#}
+{#                        <option value="value">Color: White</option>#}
+{#                        <option value="value">Color: Red</option>#}
+{#                        <option value="value">Color: Purple</option>#}
+{#                    </select>#}
+{#                </div>#}
                 <!-- Cart & Favourite Box -->
                 <div class="cart-fav-box d-flex align-items-center">
                     <!-- Cart -->
-                    <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
+                    <button type="submit" name="product_id" value="{{product.id}}" class="btn essence-btn">В Корзину</button>
                     <!-- Favourite -->
                     <div class="product-favourite ml-4">
                         <a href="#" class="favme fa fa-heart"></a>
