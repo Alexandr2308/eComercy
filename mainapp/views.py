@@ -1,8 +1,8 @@
 from urllib import request
 
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import *
 from .cart import Cart
@@ -11,7 +11,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.views.decorators.http import require_POST
 
 
-# @require_POST
+@require_POST
 def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -40,33 +40,37 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            print(form)
             form.save()
-
     else:
         form = UserCreationForm()
     return render(request, 'register_user.html', {'form': form})
 
 
-def aut_user(request):
+def auth_user(request):
     if request.method == 'POST':
-        form = UserAuthForm(request.POST)
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('shop')
-        print(form)
-        return redirect('home')
+        else:
+            auth_form = UserAuthForm(request.POST)
+            return render(request, 'aut-user.html', {'auth_form': auth_form})
     else:
-        form = UserAuthForm()
-        return render(request, 'aut-user.html', {'form': form})
+        auth_form = UserAuthForm()
+        return render(request, 'aut-user.html', {'auth_form': auth_form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 
 class IndexView(ListView):
     model = Product
     template_name = 'index.html'
+
 
 
 class ShopView(ListView):
@@ -75,33 +79,21 @@ class ShopView(ListView):
     template_name = 'shop.html'
 
 
-# class ProductDetailView(DetailView):
-#     model = Product
-#     template_name = 'single-product-details.html'
-#
-#
-#     def post(self, request, **kwargs):
-#         cart = Cart(request)
-#         add_product_form = CartAddProductForm(request.POST)
-#         if add_product_form.is_valid():
-#             cd = add_product_form.cleaned_data
-#             cart.add(product=self.kwargs,
-#                      quantity=cd['quantity'],
-#                      update_quantity=cd['update'])
-#             return redirect('cart_add')
-#         else:
-#             return redirect('auth-user')
-#         return render(request, 'single-product-details.html', {})
-
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'single-product-details.html'
-    form = CartAddProductForm()
+    add_product_form = super(CartAddProductForm)
 
+
+
+
+
+#
     def post(self, request, *args, **kwargs):
-        add_product_form = CartAddProductForm()
-        # product = Product.objects.get(slug=slug)
-        # context = {'price': price,
+        self.add_product_form = CartAddProductForm()
+        print('hello')
+        # product = Product.objects.get()
+        # context = {'price': product.price,
         #            'image': product.image,
         #            'id': product.id,
         #            'title': product.title,
@@ -110,22 +102,20 @@ class ProductDetailView(DetailView):
         if request.method == 'POST':
             cart = Cart(request)
             form = CartAddProductForm(request.POST)
-            print(form)
-            # print(cart)
             if form.is_valid():
                 cd = form.cleaned_data
                 cart.add(
-                         quantity=cd['quantity'],
-                         update_quantity=cd['update'])
-                print(cart)
+                    quantity=cd['quantity'],
+                    update_quantity=cd['update'])
                 return redirect('cart_add')
             else:
-                return redirect('auth-user')
-        return render(request, 'single-product-details.html', {'add_product_form': add_product_form})
+                return redirect('shop')
+        return super(ProductDetailView, self).get(request, *args, **kwargs)
 
 
 
-#
+
+
 # def product_detail_view(request, slug):
 #     add_product_form = CartAddProductForm()
 #     product = Product.objects.get(slug=slug)
@@ -139,7 +129,7 @@ class ProductDetailView(DetailView):
 #         cart = Cart(request)
 #         form = CartAddProductForm(request.POST)
 #         print(form)
-#         # print(cart)
+#         print(cart)
 #         if form.is_valid():
 #             cd = form.cleaned_data
 #             cart.add(product=product,
@@ -152,9 +142,6 @@ class ProductDetailView(DetailView):
 #     return render(request, 'single-product-details.html', context)
 
 
-# class CategoryListView(ListView):
-#     model = Product
-#     template_name = 'category.html'
 
 class ShortViews(ListView):
     model = Shorts

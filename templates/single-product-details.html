@@ -26,9 +26,14 @@
             <p class="product-desc">{{ product.description }}</p>
 
             <!-- Form -->
-            <form class="cart-form clearfix"  method="post">
-                {% csrf_token %}
-                {{ add_product_form.quantity }}
+            <form class="cart-list" action=""  method="post">
+                 {% csrf_token %}
+                        <td>{{ add_product_form.as_p }}</td>
+                <input type="submit" value="ADD TO CART">
+            </form>
+{#            <form class="cart-form clearfix"  method="post">#}
+{#                {% csrf_token %}#}
+{#                {{ add_product_form.quantity }}#}
                 <!-- Select Box -->
 {#                <div class="select-box d-flex mt-50 mb-30">#}
 {#                    <select name="size" id="productSize" class="mr-5">#}
@@ -45,15 +50,15 @@
 {#                    </select>#}
 {#                </div>#}
                 <!-- Cart & Favourite Box -->
-                <div class="cart-fav-box d-flex align-items-center">
-                    <!-- Cart -->
-                    <button type="submit" name="product_id" value="{{product.id}}" class="btn essence-btn">В Корзину</button>
-                    <!-- Favourite -->
-                    <div class="product-favourite ml-4">
-                        <a href="#" class="favme fa fa-heart"></a>
-                    </div>
-                </div>
-            </form>
+{#                <div class="cart-fav-box d-flex align-items-center">#}
+{#                    <!-- Cart -->#}
+{#                    <button type="submit" name="product_id" value="{{product.id}}" class="btn essence-btn">В Корзину</button>#}
+{#                    <!-- Favourite -->#}
+{#                    <div class="product-favourite ml-4">#}
+{#                        <a href="#" class="favme fa fa-heart"></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </form>#}
         </div>
     </section>
 {#    {% endfor %}#}
